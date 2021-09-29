@@ -52,7 +52,7 @@ int	check_map(int fd, t_map *map, char *g_map)
 		check_character(fd, g_map[i]);
 		if (g_map[i] != '\n')
 			map->col_curr++;
-		else if (g_map[i] == '\n')
+		else if (g_map[i +1] && g_map[i] == '\n')
 		{
 			if (map->row == 1)
 				map->col_b = map->col_curr;
@@ -84,8 +84,12 @@ t_map read_map(char *av, char **g_map)
 	printf("map:\n%s\n", *g_map);
 	init_map(&map);
 	check_map(fd, &map, *g_map);
+	printf("row:%d\n", map.row);
+	printf("col:%d\n", map.col_b);
+	printf("col:%d\n", map.col_curr);
 	check_wall(fd, &map,*g_map);
 	check_elem(fd, &map,*g_map);
+	
 	close(fd);
 	return (map);
 }
