@@ -49,10 +49,14 @@ int	check_map(int fd, t_map *map, char *g_map)
 	i = -1;	
 	while(g_map[++i])
 	{
-		check_character(fd, g_map[i]);
+		check_character(fd, g_map[i], g_map);
 		if (g_map[i] != '\n')
 			map->col_curr++;
+<<<<<<< HEAD
 		else if (g_map[i +1] && g_map[i] == '\n')
+=======
+		else if (g_map[i + 1] && g_map[i] == '\n')
+>>>>>>> ce8d39779cb638aafeeba64698dd357746686ae2
 		{
 			if (map->row == 1)
 				map->col_b = map->col_curr;
@@ -62,8 +66,8 @@ int	check_map(int fd, t_map *map, char *g_map)
 					error_meg(fd, ER_RECTAN,g_map);
 				map->col_b = map->col_curr;
 			}
-		map->col_curr = 0;
-		map->row++;	
+			map->col_curr = 0;
+			map->row++;	
 		}
 	}
 	if (map->row ==  map->col_b || map->col_b != map->col_curr)
@@ -81,15 +85,18 @@ t_map read_map(char *av, char **g_map)
 		error_meg(0, -1, 0);
 	if (parse_map(fd, g_map) < 0)
 		error_meg(fd, -1, 0);
-	printf("map:\n%s\n", *g_map);
 	init_map(&map);
 	check_map(fd, &map, *g_map);
 	printf("row:%d\n", map.row);
 	printf("col:%d\n", map.col_b);
 	printf("col:%d\n", map.col_curr);
 	check_wall(fd, &map,*g_map);
+<<<<<<< HEAD
 	check_elem(fd, &map,*g_map);
 	
+=======
+        check_elem(fd, &map,*g_map);
+>>>>>>> ce8d39779cb638aafeeba64698dd357746686ae2
 	close(fd);
 	return (map);
 }

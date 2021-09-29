@@ -73,6 +73,9 @@ void	init_img(t_allimg **allimg, void *mlx, void	*win, t_map *map, char *g_map)
 		return ;
 	init_postion(map, &(*allimg)->position, g_map);
 	(*allimg)->g_map = g_map;
+	printf("g_map:%p\n", g_map);
+        printf("g_map in all:%p\n", (*allimg)->g_map);
+
 }
 
 void	initial_map(t_map *map, void *mlx ,void *win ,t_allimg **allimg, char *g_map)
@@ -141,7 +144,7 @@ void free_all(t_allimg **allimg)
 	free((*allimg)->position);
 	free((*allimg)->g_map);
 	mlx_destroy_window((*allimg)->mlx, (*allimg)->win);
-	//mlx_destroy_display((*allimg)->mlx);
+	mlx_destroy_display((*allimg)->mlx);
 	free((*allimg)->mlx);
 	free((*allimg));
 	exit(0);
@@ -174,13 +177,13 @@ int	handle_input(int key, t_allimg **allimg)
 	p_cur = p;
 	// printf("key:%d\n", key);
 	// printf("position:%d\n", p);
-	if (key == 0)
+	if (key == 97)
 		new_imgandpostion(allimg,&step, p_cur, p - 1, x-1 , x , y , y);
-	else if (key == 2)
+	else if (key == 100)
 		new_imgandpostion(allimg,&step, p_cur, p + 1, x+1 , x , y , y);
-	else if (key == 13)
+	else if (key == 119)
 		new_imgandpostion(allimg,&step, p_cur, p - 1 - (*allimg)->position->col , x , x , y-1 , y);
-	else if (key == 1)
+	else if (key == 115)
 		new_imgandpostion(allimg,&step, p_cur, p + 1 + (*allimg)->position->col , x , x , y+1 , y);
 	if ((*allimg)->g_map[(*allimg)->position->p] == 'E' && chech_gmap((*allimg)->g_map) == 0)
 	{
@@ -194,8 +197,8 @@ int	handle_input(int key, t_allimg **allimg)
 
 int	close_game(int keycode, t_allimg *allimg)
 {
-	printf("close_game\n");
-	if (keycode == 53)
+	printf("close_game:%d\n", keycode);
+	if (keycode == 65307)
 		free_all(&allimg);
 	return 0;
 }
@@ -218,13 +221,20 @@ int main(int ac, char**av)
 		error_meg(0, ER_FILE, g_map);
 	map = read_map(av[1], &g_map);
 	mlx = mlx_init();
+	if (!mlx)
+		error_meg(0, ERRO, g_map);
 	win = mlx_new_window(mlx, 60 * map.col_curr, 60 * map.row, "Diamond Dig!");
+	if (!win)
+	{
+		free(mlx);
+		error_meg(0, ERRO, g_map);
+	}
 	allimg = 0;
 	initial_map(&map, mlx, win , &allimg, g_map);
 	mlx_key_hook(win, &handle_input, &allimg);
 	mlx_hook(win, 2, 1L<<0, &close_game, allimg);
 	mlx_hook(win, 17, 1L<<0, &close_game_mouse, allimg);
 	mlx_loop(mlx);
-	
+	free(g_map);	
 	return (0);
 }

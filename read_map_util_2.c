@@ -1,9 +1,9 @@
 #include "so_long.h"
 
-int		check_character(int fd, char c)
+int		check_character(int fd, char c, char *g_map)
 {
 	if (c != '0' && c != '1' && c != 'C' && c != 'P' && c != 'E' && c != '\n')
-		error_meg(fd, ER_CHAR, 0);
+		error_meg(fd, ER_CHAR, g_map);
 	return (0);
 }
 
