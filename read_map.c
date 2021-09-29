@@ -1,23 +1,37 @@
-#include "so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/29 16:16:37 by wlo               #+#    #+#             */
+/*   Updated: 2021/09/29 17:27:16 by wlo              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int check_wall(int fd, t_map *map, char *g_map)
+#include "includes/so_long.h"
+
+int	check_wall(int fd, t_map *map, char *g_map)
 {
 	int	i;
-	int	row;
-	int col;
+	int	r;
+	int	c;
+	int	c2;
 
 	i = -1;
-	row = map->row;
-	col = map->col_curr;
-	while(++i < col)
+	r = map->row;
+	c = map->col_curr;
+	c2 = c + 1;
+	while (++i < c)
 	{
-		if (g_map[i] != '1'|| g_map[i + (row - 1) * (col + 1)] != '1')
-			error_meg(fd, ER_WALL,g_map);
+		if (g_map[i] != '1' || g_map[i + (r - 1) * (c + 1)] != '1')
+			error_meg(fd, ER_WALL, g_map);
 	}
 	i = -1;
-	while(++i < row -1)
+	while (++i < r - 1)
 	{
-		if (g_map[(i + 1) * (col + 1)] != '1' || g_map[(col - 1) + i * (col + 1)] !='1')
+		if (g_map[(i + 1) * (c2)] != '1' || g_map[(c - 1) + i * (c2)] != '1')
 			error_meg(fd, ER_WALL, g_map);
 	}
 	return (0);
@@ -25,7 +39,7 @@ int check_wall(int fd, t_map *map, char *g_map)
 
 int	check_elem(int fd, t_map *map, char *g_map)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (g_map[++i])
@@ -38,47 +52,43 @@ int	check_elem(int fd, t_map *map, char *g_map)
 			map->n_p++;
 	}
 	if (map->n_c == 0 || map->n_e == 0 || map->n_p == 0)
-		error_meg(fd, ER_ELE,g_map);
+		error_meg(fd, ER_ELE, g_map);
 	return (0);
 }
 
 int	check_map(int fd, t_map *map, char *g_map)
 {
 	int	i;
-	
-	i = -1;	
-	while(g_map[++i])
+
+	i = -1;
+	while (g_map[++i])
 	{
 		check_character(fd, g_map[i], g_map);
 		if (g_map[i] != '\n')
 			map->col_curr++;
-<<<<<<< HEAD
-		else if (g_map[i +1] && g_map[i] == '\n')
-=======
 		else if (g_map[i + 1] && g_map[i] == '\n')
->>>>>>> ce8d39779cb638aafeeba64698dd357746686ae2
 		{
 			if (map->row == 1)
 				map->col_b = map->col_curr;
-			else 
+			else
 			{
 				if (map->col_b != map->col_curr)
-					error_meg(fd, ER_RECTAN,g_map);
+					error_meg(fd, ER_RECTAN, g_map);
 				map->col_b = map->col_curr;
 			}
 			map->col_curr = 0;
-			map->row++;	
+			map->row++;
 		}
 	}
-	if (map->row ==  map->col_b || map->col_b != map->col_curr)
-		error_meg(fd, ER_RECTAN,g_map);
+	if (map->row == map->col_b || map->col_b != map->col_curr)
+		error_meg(fd, ER_RECTAN, g_map);
 	return (0);
 }
 
-t_map read_map(char *av, char **g_map)
+t_map	read_map(char *av, char **g_map)
 {
-	int	fd;
-	t_map map;
+	int		fd;
+	t_map	map;
 
 	fd = open(av, O_RDONLY);
 	if (fd < 0)
@@ -87,17 +97,8 @@ t_map read_map(char *av, char **g_map)
 		error_meg(fd, -1, 0);
 	init_map(&map);
 	check_map(fd, &map, *g_map);
-	printf("row:%d\n", map.row);
-	printf("col:%d\n", map.col_b);
-	printf("col:%d\n", map.col_curr);
 	check_wall(fd, &map,*g_map);
-<<<<<<< HEAD
 	check_elem(fd, &map,*g_map);
-	
-=======
-        check_elem(fd, &map,*g_map);
->>>>>>> ce8d39779cb638aafeeba64698dd357746686ae2
 	close(fd);
 	return (map);
 }
-

@@ -1,4 +1,16 @@
-#include "so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map_util.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/29 16:15:08 by wlo               #+#    #+#             */
+/*   Updated: 2021/09/29 17:02:00 by wlo              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "includes/so_long.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
@@ -69,19 +81,20 @@ void	error_meg(int fd, int error, char *g_map)
 	else if (error == -2)
 		write(2, "Characters are not valid\n", 25);
 	else if (error == -3)
-		write(2, "Map is not a rectangular\n",25);
+		write(2, "Map is not a rectangular\n", 25);
 	else if (error == -4)
-		write(2, "Map is not surrounded by wall\n",30);
+		write(2, "Map is not surrounded by wall\n", 30);
 	else if (error == -5)
-		write(2, "Map must have at least a P, a E and a C\n",40);
+		write(2, "Map must have at least a P, a E and a C\n", 40);
 	else
-		write(2, "Error happaned!\n",16);
+		write(2, "Error happaned!\n", 16);
 	exit(1);
 }
 
-int check_extension(char *av, char *g_map)
+int	check_extension(char *av, char *g_map)
 {
-	char *str;
+	char	*str;
+
 	str = ft_strchr(av, '.');
 	if (!str)
 		error_meg(0, ER_FILE, g_map);
