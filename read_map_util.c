@@ -66,14 +66,16 @@ void	error_meg(int fd, int error, char *g_map)
 	ft_putstr_fd("Error\n", 2);
 	if (error == -1)
 		write(2, "File is not valid\n", 18);
-	if (error == -2)
+	else if (error == -2)
 		write(2, "Characters are not valid\n", 25);
-	if (error == -3)
+	else if (error == -3)
 		write(2, "Map is not a rectangular\n",25);
-	if (error == -4)
+	else if (error == -4)
 		write(2, "Map is not surrounded by wall\n",30);
-	if (error == -5)
+	else if (error == -5)
 		write(2, "Map must have at least a P, a E and a C\n",40);
+	else
+		write(2, "Error happaned!\n",16);
 	exit(1);
 }
 
@@ -81,6 +83,8 @@ int check_extension(char *av, char *g_map)
 {
 	char *str;
 	str = ft_strchr(av, '.');
+	if (!str)
+		error_meg(0, ER_FILE, g_map);
 	str++;
 	if (ft_strcmp(str, "ber"))
 		error_meg(0, ER_FILE, g_map);
