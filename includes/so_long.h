@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:44:50 by wlo               #+#    #+#             */
-/*   Updated: 2021/09/30 12:56:44 by wlo              ###   ########.fr       */
+/*   Updated: 2021/09/30 16:41:50 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <string.h>
 # include "../libft/libft.h"
 # ifdef __linux__
-#  include "./mlx_linux/mlx.h"
+#  include "../mlx_linux/mlx.h"
 # else
 #  include <mlx.h>
 # endif
@@ -46,7 +46,8 @@
 # define ER_RECTAN -3
 # define ER_WALL -4
 # define ER_ELE -5
-# define ERRO -6
+# define ER_P -6
+# define ERRO -7
 # define PH_WALL "./img/wall.xpm"
 # define PH_FLOOR2 "./img/floor2.xpm"
 # define PH_DIAMON "./img/diamond.xpm"

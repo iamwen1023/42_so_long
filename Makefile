@@ -1,24 +1,32 @@
 INCS		= includes
 LIB			= libft
 LIB.A		= libft.a
-SRC			= read_map_util_2.c read_map_util.c read_map.c so_long.c so_long_util_2.c so_long_util.c
+SRC			= basic/read_map_util_2.c basic/read_map_util.c basic/read_map.c basic/so_long.c basic/so_long_util_2.c basic/so_long_util.c
+SRC_B		= bonus/read_map_util_2.c bonus/read_map_util.c bonus/read_map.c bonus/so_long.c bonus/so_long_util_2.c bonus/so_long_util.c
 OBJ			= $(SRC:.c=.o)
+OBJ_B		= $(SRC_B:.c=.o)
 NAME		= so_long
+NAME_B		= so_long_bonus
 FLAGS		= -Wall -Wextra -Werror -I${INCS} 
 OS 			= $(shell uname)
+
 ifeq (${DEBUG}, 1)
 	FLAGS	+= -g
 endif
 
 ifeq ($(OS), Linux)
 	FLAGS_PLUS	= -Lmlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
-	SRC 	+= destroy_linux.c
+	SRC 	+= basic/destroy_linux.c
+	SRC_B 	+= basic/destroy_linux.c
 else
 	FLAGS_PLUS	= -lmlx -framework OpenGL -framework AppKit -fsanitize=address -g3 -O0 
-	SRC 	+= destroy_mac.c
+	SRC 	+= basic/destroy_mac.c
+	SRC_B 	+= basic/destroy_mac.c
 endif
 		
-all: $(NAME) 
+all: $(NAME)
+
+bonus: $(NAME_B)
 
 $(LIB.A):
 		make -C $(LIB)
@@ -27,16 +35,18 @@ $(LIB.A):
 $(NAME): $(LIB.A) $(OBJ)
 		gcc -o $@ $(OBJ) $(LIB.A) $(FLAGS) $(FLAGS_PLUS)
 
+$(NAME_B): $(LIB.A) $(OBJ_B)
+		gcc -o $@ $(OBJ_B) $(LIB.A) $(FLAGS) $(FLAGS_PLUS)
 
 %.o: %.c
 		cc $(FLAGS) -c $< -o $(<:.c=.o)
 
 clean:
-		$(RM) $(OBJ) $(LIB.A)
+		$(RM) $(OBJ) $(OBJ_B) $(LIB.A)
 		make clean -C $(LIB)
 
 fclean:		clean
-		$(RM)  $(NAME) $(LIB.A)
+		$(RM)  $(NAME) $(NAME_B) $(LIB.A)
 		make fclean -C $(LIB)
 
 re:		fclean all
