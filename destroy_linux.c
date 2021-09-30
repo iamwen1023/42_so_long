@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   destroy_linux.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wlo <marvin@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/30 12:41:47 by wlo               #+#    #+#             */
+/*   Updated: 2021/09/30 12:42:06 by wlo              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "includes/so_long.h"
 
-void destroy(t_allimg **allimg)
+void	destroy(t_allimg **allimg)
 {
-	mlx_destroy_display((*allimg)->mlx);
+	mlx_destroy_display((*allimg)->m);
 	return ;
 }

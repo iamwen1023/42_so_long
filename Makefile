@@ -14,7 +14,7 @@ ifeq ($(OS), Linux)
 	FLAGS_PLUS	= -Lmlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 	SRC 	+= destroy_linux.c
 else
-	FLAGS_PLUS	= -lmlx -framework OpenGL -framework AppKit
+	FLAGS_PLUS	= -lmlx -framework OpenGL -framework AppKit -fsanitize=address -g3 -O0 
 	SRC 	+= destroy_mac.c
 endif
 		
