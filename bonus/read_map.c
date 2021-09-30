@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 16:16:37 by wlo               #+#    #+#             */
-/*   Updated: 2021/09/30 15:37:19 by wlo              ###   ########.fr       */
+/*   Updated: 2021/09/30 18:14:58 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_map(int fd, t_map *map, char *g_map)
 		check_character(fd, g_map[i], g_map);
 		if (g_map[i] != '\n')
 			map->col_curr++;
-		else if (g_map[i + 1] && g_map[i] == '\n')
+		else if (g_map[i + 1] && g_map[i + 1] != '\n' && g_map[i] == '\n')
 		{
 			if (map->row == 1)
 				map->col_b = map->col_curr;
