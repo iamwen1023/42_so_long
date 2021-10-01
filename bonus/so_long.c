@@ -6,11 +6,35 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:30:08 by wlo               #+#    #+#             */
-/*   Updated: 2021/09/30 16:52:46 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 14:42:25 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+int show_move(t_allimg **a, int step)
+{
+	int		r;
+	char	*arr;
+
+	r = (*a)->position->row * 60 + 15;
+	if (step > 0)
+	{
+		arr = ft_itoa(step - 1);
+		if (!arr)
+			return (-1);
+		mlx_string_put((*a)->m, (*a)->w, 120, r, 0x000000, arr);
+		free(arr);
+		arr = NULL;
+	}
+	arr = ft_itoa(step);
+	if (!arr)
+		return (-1);
+	mlx_string_put((*a)->m, (*a)->w, 120, r, 0xFFFFFF, arr);
+	free(arr);
+	arr = NULL;
+	return (0);
+}
 
 int	handle_input(int key, t_allimg **a)
 {
@@ -18,12 +42,10 @@ int	handle_input(int key, t_allimg **a)
 	int			x;
 	int			y;
 	static int	step = 0;
-	int			r;
 
 	p = (*a)->position->p;
 	x = (*a)->position->x;
 	y = (*a)->position->y;
-	r = (*a)->position->row * 60;
 	if (key == KEY_A)
 		ne_po(a, &step, (t_p){p, p - 1, x - 1, x, y, y});
 	else if (key == KEY_D)
@@ -34,9 +56,14 @@ int	handle_input(int key, t_allimg **a)
 		ne_po(a, &step, (t_p){p, p + 1 + (*a)->position->col, x, x, y + 1, y});
 	if ((*a)->g_map[(*a)->position->p] == 'E' && check_gmap((*a)->g_map) == 0)
 		free_all(a);
-	if (step > 0)
-		mlx_string_put((*a)->m, (*a)->w, 120, r, 0x000000, ft_itoa(step - 1));
-	mlx_string_put((*a)->m, (*a)->w, 120, r, 0xFFFFFF, ft_itoa(step));
+	// if (step > 0)
+	// 	mlx_string_put((*a)->m, (*a)->w, 120, r, 0x000000, ft_itoa(step - 1));
+	// mlx_string_put((*a)->m, (*a)->w, 120, r, 0xFFFFFF, ft_itoa(step));
+	if (show_move(a, step))
+	{
+		error_meg(0, ERRO, 0);
+		free_all(a);
+	}	
 	printf("Current number of movements:%d\n", step);
 	return (0);
 }
@@ -59,8 +86,10 @@ void	in_the_windows(t_map *map, char	*g_map)
 	t_allimg	*allimg;
 	t_w			w_p;
 	int			col;
+	int			row;
 
 	col = map->col_curr;
+	row = map->row;
 	w_p.m = mlx_init();
 	if (!w_p.m)
 		error_meg(0, ERRO, g_map);
@@ -72,7 +101,7 @@ void	in_the_windows(t_map *map, char	*g_map)
 	}
 	allimg = 0;
 	initial_map(map, &w_p, &allimg, g_map);
-	mlx_string_put(w_p.m, w_p.w, 0, (map->row) * 60, 0xFFFFFF, "Movements:");
+	mlx_string_put(w_p.m, w_p.w, 0, row * 60 + 15, 0xFFFFFF, "Movements:");
 	mlx_key_hook(w_p.w, &handle_input, &allimg);
 	mlx_hook(w_p.w, 2, 1L << 0, &close_game, allimg);
 	mlx_hook(w_p.w, 17, 1L << 0, &close_game_mouse, allimg);
