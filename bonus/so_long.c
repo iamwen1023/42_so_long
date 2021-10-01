@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:30:08 by wlo               #+#    #+#             */
-/*   Updated: 2021/10/01 14:52:57 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 17:39:43 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,48 @@ int	handle_input(int key, t_allimg **a)
 		ne_po(a, &step, (t_p){p, p + 1 + (*a)->position->col, x, x, y + 1, y});
 	if ((*a)->g_map[(*a)->position->p] == 'E' && check_gmap((*a)->g_map) == 0)
 		free_all(a);
+	if ((*a)->g_map[(*a)->position->p] != 'E')
+		(*a)->g_map[(*a)->position->p] = 'P';
 	if (show_move(a, step))
-	{
-		error_meg(0, ERRO, 0);
 		free_all(a);
-	}	
-	printf("Current number of movements:%d\n", step);
 	return (0);
 }
 
-int	close_game(int keycode, t_allimg *allimg)
+void	curr_map_2(t_allimg *a, int x, int y, int i)
 {
-	if (keycode == KEY_ESC)
-		free_all(&allimg);
-	return (0);
+	if (a->g_map[i] == '1')
+		mlx_put_image_to_window(a->m, a->w, a->b, x * S, y * S);
+	else if (a->g_map[i] == 'C')
+		mlx_put_image_to_window(a->m, a->w, a->d, x * S, y * S);
+	else if (a->g_map[i] == 'P')
+		mlx_put_image_to_window(a->m, a->w, a->p, x * S, y * S);
+	else if (a->g_map[i] == 'E')
+		mlx_put_image_to_window(a->m, a->w, a->e, x * S, y * S);
 }
 
-int	close_game_mouse(t_allimg *allimg)
+int	curr_map(t_allimg *a)
 {
-	free_all(&allimg);
+	int	x;
+	int	y;
+	int	i;
+	int	l;
+
+	y = -1;
+	l = a->position->row * 60 + 15;
+	while (++y < a->position->row)
+	{
+		x = -1;
+		while (++x < a->position->col)
+		{
+			i = x + (y * a->position->col + y);
+			if (a->g_map[i] == 'E' && a->position->p == i)
+				mlx_put_image_to_window(a->m, a->w, a->ep, x * S, y * S);
+			else if (a->g_map[i] == '0')
+				mlx_put_image_to_window(a->m, a->w, a->f, x * S, y * S);
+			else
+				curr_map_2(a, x, y, i);
+		}
+	}
 	return (0);
 }
 
@@ -78,6 +101,7 @@ void	in_the_windows(t_map *map, char	*g_map)
 	mlx_key_hook(w_p.w, &handle_input, &allimg);
 	mlx_hook(w_p.w, 2, 1L << 0, &close_game, allimg);
 	mlx_hook(w_p.w, 17, 1L << 0, &close_game_mouse, allimg);
+	mlx_loop_hook(w_p.m, &curr_map, allimg);
 	mlx_loop(w_p.m);
 	free(g_map);
 }

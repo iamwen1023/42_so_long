@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 17:29:44 by wlo               #+#    #+#             */
-/*   Updated: 2021/10/01 15:04:46 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 17:38:31 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,9 @@ void	initial_map(t_map *map, t_w	*p, t_allimg **a, char *g_map)
 	}
 }
 
-void	ne_po(t_allimg **a, int *step, t_p p)
+void	ne_po_2(t_allimg **a, t_p p)
 {
-	if ((*a)->g_map[p.p] == '1')
-		return ;
-	if ((*a)->g_map[p.curr] == 'E')
-	{
-		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->p, p.x1 * S, p.y1 * S);
-		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->e, p.x2 * S, p.y2 * S);
-	}
-	else if ((*a)->g_map[p.p] == 'E')
+	if ((*a)->g_map[p.p] == 'E')
 	{
 		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->ep, p.x1 * S, p.y1 * S);
 		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->f, p.x2 * S, p.y2 * S);
@@ -112,34 +105,25 @@ void	ne_po(t_allimg **a, int *step, t_p p)
 		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->p, p.x1 * S, p.y1 * S);
 		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->f, p.x2 * S, p.y2 * S);
 	}
+}
+
+void	ne_po(t_allimg **a, int *step, t_p p)
+{
+	if ((*a)->g_map[p.p] == '1')
+		return ;
+	if ((*a)->g_map[p.curr] == 'E')
+	{
+		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->p, p.x1 * S, p.y1 * S);
+		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->e, p.x2 * S, p.y2 * S);
+	}
+	else
+		ne_po_2(a, p);
 	if ((*a)->g_map[p.curr] == 'C')
+		(*a)->g_map[p.curr] = '0';
+	if ((*a)->g_map[p.curr] == 'P')
 		(*a)->g_map[p.curr] = '0';
 	(*a)->position->p = p.p;
 	(*a)->position->x = p.x1;
 	(*a)->position->y = p.y1;
 	*step = *step + 1;
-}
-
-int	show_move(t_allimg **a, int step)
-{
-	int		r;
-	char	*arr;
-
-	r = (*a)->position->row * 60 + 15;
-	if (step > 0)
-	{
-		arr = ft_itoa(step - 1);
-		if (!arr)
-			return (-1);
-		mlx_string_put((*a)->m, (*a)->w, 120, r, 0x000000, arr);
-		free(arr);
-		arr = NULL;
-	}
-	arr = ft_itoa(step);
-	if (!arr)
-		return (-1);
-	mlx_string_put((*a)->m, (*a)->w, 120, r, 0xFFFFFF, arr);
-	free(arr);
-	arr = NULL;
-	return (0);
 }

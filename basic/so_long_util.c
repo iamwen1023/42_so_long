@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 17:29:44 by wlo               #+#    #+#             */
-/*   Updated: 2021/09/30 15:37:31 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 17:37:30 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,9 @@ void	initial_map(t_map *map, t_w	*p, t_allimg **a, char *g_map)
 	}
 }
 
-void	ne_po(t_allimg **a, int *step, t_p p)
+void	ne_po_2(t_allimg **a, t_p p)
 {
-	if ((*a)->g_map[p.p] == '1')
-		return ;
-	if ((*a)->g_map[p.curr] == 'E')
-	{
-		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->p, p.x1 * S, p.y1 * S);
-		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->e, p.x2 * S, p.y2 * S);
-	}
-	else if ((*a)->g_map[p.p] == 'E')
+	if ((*a)->g_map[p.p] == 'E')
 	{
 		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->ep, p.x1 * S, p.y1 * S);
 		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->f, p.x2 * S, p.y2 * S);
@@ -112,7 +105,22 @@ void	ne_po(t_allimg **a, int *step, t_p p)
 		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->p, p.x1 * S, p.y1 * S);
 		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->f, p.x2 * S, p.y2 * S);
 	}
+}
+
+void	ne_po(t_allimg **a, int *step, t_p p)
+{
+	if ((*a)->g_map[p.p] == '1')
+		return ;
+	if ((*a)->g_map[p.curr] == 'E')
+	{
+		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->p, p.x1 * S, p.y1 * S);
+		mlx_put_image_to_window((*a)->m, (*a)->w, (*a)->e, p.x2 * S, p.y2 * S);
+	}
+	else
+		ne_po_2(a, p);
 	if ((*a)->g_map[p.curr] == 'C')
+		(*a)->g_map[p.curr] = '0';
+	if ((*a)->g_map[p.curr] == 'P')
 		(*a)->g_map[p.curr] = '0';
 	(*a)->position->p = p.p;
 	(*a)->position->x = p.x1;

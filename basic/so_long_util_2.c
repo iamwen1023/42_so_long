@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:27:17 by wlo               #+#    #+#             */
-/*   Updated: 2021/09/30 15:37:01 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 17:36:03 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,10 @@ int	check_gmap(char *g_map)
 			collect++;
 	}
 	return (collect);
+}
+
+int	close_game_mouse(t_allimg *allimg)
+{
+	free_all(&allimg);
+	return (0);
 }

@@ -15,7 +15,7 @@ ifeq (${DEBUG}, 1)
 endif
 
 ifeq ($(OS), Linux)
-	FLAGS_PLUS	= -Lmlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
+	FLAGS_PLUS	= -Lmlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm
 	SRC 	+= basic/destroy_linux.c
 	SRC_B 	+= basic/destroy_linux.c
 else

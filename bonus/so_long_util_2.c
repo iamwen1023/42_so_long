@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:27:17 by wlo               #+#    #+#             */
-/*   Updated: 2021/09/30 15:40:17 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 17:38:10 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,41 @@ int	check_gmap(char *g_map)
 			collect++;
 	}
 	return (collect);
+}
+
+int	close_game(int keycode, t_allimg *allimg)
+{
+	if (keycode == KEY_ESC)
+		free_all(&allimg);
+	return (0);
+}
+
+int	close_game_mouse(t_allimg *allimg)
+{
+	free_all(&allimg);
+	return (0);
+}
+
+int	show_move(t_allimg **a, int step)
+{
+	int		r;
+	char	*arr;
+
+	r = (*a)->position->row * 60 + 15;
+	if (step > 0)
+	{
+		arr = ft_itoa(step - 1);
+		if (!arr)
+			return (-1);
+		mlx_string_put((*a)->m, (*a)->w, 120, r, 0x000000, arr);
+		free(arr);
+		arr = NULL;
+	}
+	arr = ft_itoa(step);
+	if (!arr)
+		return (-1);
+	mlx_string_put((*a)->m, (*a)->w, 120, r, 0xFFFFFF, arr);
+	free(arr);
+	arr = NULL;
+	return (0);
 }
