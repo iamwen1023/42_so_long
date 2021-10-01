@@ -6,35 +6,11 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:30:08 by wlo               #+#    #+#             */
-/*   Updated: 2021/10/01 14:42:25 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 14:52:57 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-int show_move(t_allimg **a, int step)
-{
-	int		r;
-	char	*arr;
-
-	r = (*a)->position->row * 60 + 15;
-	if (step > 0)
-	{
-		arr = ft_itoa(step - 1);
-		if (!arr)
-			return (-1);
-		mlx_string_put((*a)->m, (*a)->w, 120, r, 0x000000, arr);
-		free(arr);
-		arr = NULL;
-	}
-	arr = ft_itoa(step);
-	if (!arr)
-		return (-1);
-	mlx_string_put((*a)->m, (*a)->w, 120, r, 0xFFFFFF, arr);
-	free(arr);
-	arr = NULL;
-	return (0);
-}
 
 int	handle_input(int key, t_allimg **a)
 {
@@ -56,9 +32,6 @@ int	handle_input(int key, t_allimg **a)
 		ne_po(a, &step, (t_p){p, p + 1 + (*a)->position->col, x, x, y + 1, y});
 	if ((*a)->g_map[(*a)->position->p] == 'E' && check_gmap((*a)->g_map) == 0)
 		free_all(a);
-	// if (step > 0)
-	// 	mlx_string_put((*a)->m, (*a)->w, 120, r, 0x000000, ft_itoa(step - 1));
-	// mlx_string_put((*a)->m, (*a)->w, 120, r, 0xFFFFFF, ft_itoa(step));
 	if (show_move(a, step))
 	{
 		error_meg(0, ERRO, 0);

@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 17:29:44 by wlo               #+#    #+#             */
-/*   Updated: 2021/09/30 16:48:48 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 14:52:59 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,28 @@ void	ne_po(t_allimg **a, int *step, t_p p)
 	(*a)->position->x = p.x1;
 	(*a)->position->y = p.y1;
 	*step = *step + 1;
+}
+
+int	show_move(t_allimg **a, int step)
+{
+	int		r;
+	char	*arr;
+
+	r = (*a)->position->row * 60 + 15;
+	if (step > 0)
+	{
+		arr = ft_itoa(step - 1);
+		if (!arr)
+			return (-1);
+		mlx_string_put((*a)->m, (*a)->w, 120, r, 0x000000, arr);
+		free(arr);
+		arr = NULL;
+	}
+	arr = ft_itoa(step);
+	if (!arr)
+		return (-1);
+	mlx_string_put((*a)->m, (*a)->w, 120, r, 0xFFFFFF, arr);
+	free(arr);
+	arr = NULL;
+	return (0);
 }

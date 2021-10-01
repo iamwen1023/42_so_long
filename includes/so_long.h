@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:44:50 by wlo               #+#    #+#             */
-/*   Updated: 2021/09/30 16:41:50 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 14:52:55 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,6 @@ int		handle_input(int key, t_allimg **allimg);
 int		close_game(int keycode, t_allimg *allimg);
 int		close_game_mouse(t_allimg *allimg);
 void	in_the_windows(t_map *map, char	*g_map);
+int		show_move(t_allimg **a, int step);
 
 #endif
