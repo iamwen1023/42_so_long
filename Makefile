@@ -19,7 +19,7 @@ ifeq ($(OS), Linux)
 	SRC 	+= basic/destroy_linux.c
 	SRC_B 	+= basic/destroy_linux.c
 else
-	FLAGS_PLUS	= -lmlx -framework OpenGL -framework AppKit -fsanitize=address -g3 -O0 
+	FLAGS_PLUS	= -lmlx -framework OpenGL -framework AppKit
 	SRC 	+= basic/destroy_mac.c
 	SRC_B 	+= basic/destroy_mac.c
 endif

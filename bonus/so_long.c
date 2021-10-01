@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:30:08 by wlo               #+#    #+#             */
-/*   Updated: 2021/10/01 17:57:10 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 18:04:15 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int	curr_map(t_allimg *a)
 				curr_map_2(a, x, y, i);
 		}
 	}
-	mlx_string_put(a->m, a->w, 0, l, 0x000000, "Movements:");
-	mlx_string_put(a->m, a->w, 0, l, 0xFFFFFF, "Movements:");
+	mlx_string_put(a->m, a->w, 10, l, 0x000000, "Movements:");
+	mlx_string_put(a->m, a->w, 10, l, 0xFFFFFF, "Movements:");
 	return (0);
 }
 
