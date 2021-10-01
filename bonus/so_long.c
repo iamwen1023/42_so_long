@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:30:08 by wlo               #+#    #+#             */
-/*   Updated: 2021/10/01 17:39:43 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 17:53:52 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	curr_map(t_allimg *a)
 				curr_map_2(a, x, y, i);
 		}
 	}
+	mlx_string_put(a->m, a->w, 0, l, 0x000000, "Movements:");
+	mlx_string_put(a->m, a->w, 0, l, 0xFFFFFF, "Movements:");
 	return (0);
 }
 
@@ -97,7 +99,6 @@ void	in_the_windows(t_map *map, char	*g_map)
 	}
 	allimg = 0;
 	initial_map(map, &w_p, &allimg, g_map);
-	mlx_string_put(w_p.m, w_p.w, 0, row * 60 + 15, 0xFFFFFF, "Movements:");
 	mlx_key_hook(w_p.w, &handle_input, &allimg);
 	mlx_hook(w_p.w, 2, 1L << 0, &close_game, allimg);
 	mlx_hook(w_p.w, 17, 1L << 0, &close_game_mouse, allimg);
