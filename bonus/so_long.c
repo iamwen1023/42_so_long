@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:30:08 by wlo               #+#    #+#             */
-/*   Updated: 2021/10/01 17:53:52 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/01 17:57:10 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,8 @@ void	in_the_windows(t_map *map, char	*g_map)
 	t_allimg	*allimg;
 	t_w			w_p;
 	int			col;
-	int			row;
 
 	col = map->col_curr;
-	row = map->row;
 	w_p.m = mlx_init();
 	if (!w_p.m)
 		error_meg(0, ERRO, g_map);
