@@ -6,7 +6,7 @@
 /*   By: wlo <wlo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 16:16:37 by wlo               #+#    #+#             */
-/*   Updated: 2021/09/30 18:14:58 by wlo              ###   ########.fr       */
+/*   Updated: 2021/10/04 10:54:52 by wlo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	check_map(int fd, t_map *map, char *g_map)
 			map->row++;
 		}
 	}
-	if (map->row == map->col_b || map->col_b != map->col_curr)
+	if ( map->col_b != map->col_curr)
 		error_meg(fd, ER_RECTAN, g_map);
 	return (0);
 }
